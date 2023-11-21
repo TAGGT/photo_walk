@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
+            $table->string('custom_tag', 100)->nullable();
+            $table->float('latitude', 9, 6);
+            $table->float('longitude',9, 6);
+            $table->string('photo_pas');
+            $table->timestamp('created_at');
         });
     }
 
