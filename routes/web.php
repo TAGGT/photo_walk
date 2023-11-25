@@ -30,4 +30,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::controller(PhotoController::class)->middleware(['auth'])->group(function(){
+	//Route::get('/', 'home')->name('home');
+	Route::post('/posts', 'store')->name('store'); //投稿保存処理
+	Route::get('/posts/create', 'create')->name('create'); //投稿画面
+	//Route::get('/posts/{photo}', 'show')->name('show'); //後で付ける
+	//Route::put('/posts/{photo}', 'update')->name('update');//付ける予定あんまなし
+	//Route::delete('/posts/{photo}', 'delete')->name('delete'); //後で付ける
+	//Route::get('/posts/{photo}/edit', 'edit')->name('edit');//付ける予定あんまなし
+});
+
+Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");
+
 require __DIR__.'/auth.php';
