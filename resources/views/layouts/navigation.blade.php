@@ -19,7 +19,7 @@
                         {{ __('Create') }}
                     </x-nav-link>
                     <x-nav-link :href="route('home')" :active="request()->routeIs('dashboard')">
-                        {{ __('Create') }}
+                        {{ __('Home') }}
                     </x-nav-link>
                 </div>
             </div>
