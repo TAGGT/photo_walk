@@ -17,6 +17,11 @@ class Photo extends Model
         'longitude',
         'photo_pas',
     ];
+
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class);
+    }
     
     const CREATED_AT = 'created_at';
 }

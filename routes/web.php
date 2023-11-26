@@ -34,6 +34,7 @@ Route::controller(PhotoController::class)->middleware(['auth'])->group(function(
 	//Route::get('/', 'home')->name('home');
 	Route::post('/posts', 'store')->name('store'); //投稿保存処理
 	Route::get('/posts/create', 'create')->name('create'); //投稿画面
+	Route::get('/posts/home', 'home')->name('home'); //投稿画面
 	//Route::get('/posts/{photo}', 'show')->name('show'); //後で付ける
 	//Route::put('/posts/{photo}', 'update')->name('update');//付ける予定あんまなし
 	//Route::delete('/posts/{photo}', 'delete')->name('delete'); //後で付ける

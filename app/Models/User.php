@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function photos()   
+    {
+        return $this->hasMany(Photo::class);  
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

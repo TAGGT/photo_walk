@@ -17,10 +17,16 @@ class PhotoController extends Controller
 		return view('posts.create')->with(['tags' => $tag->get()]);
 	}
 
+    public function home()
+	{
+		return view('posts.create')->with(['photos' => $tag->get()]);
+	}
+
     public function store(PhotoRequest $request, Photo $photo)
     {
         $input = $request['post'];
         //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
+        dd(Auth::user());
         $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
         $user_id = Auth::user()->id;
         $input += ['photo_pas' => $image_url];
