@@ -18,7 +18,9 @@
 	  <div class='my-photo'>
 	    @foreach ($photos as $photo)
 		    <div>
-          <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+          <a href='/posts/show/{{ $photo->id }}'>
+            <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+          </a>
         </div>
 	    @endforeach
 	  </div>
