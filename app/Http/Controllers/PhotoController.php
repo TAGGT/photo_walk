@@ -19,7 +19,7 @@ class PhotoController extends Controller
 
     public function home()
 	{
-		return view('posts.create')->with(['photos' => $tag->get()]);
+		return view('posts.create')->with(['photos' => Auth::user()->photos()->get()]);
 	}
 
     public function store(PhotoRequest $request, Photo $photo)
