@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('latitude', 9, 6);
             $table->float('longitude',9, 6);
             $table->string('photo_pas');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->nullable();
         });
     }
 

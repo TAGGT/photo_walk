@@ -17,5 +17,6 @@ class Photo extends Model
         'longitude',
         'photo_pas',
     ];
-
+    
+    const CREATED_AT = 'created_at';
 }

@@ -16,11 +16,9 @@
     <!-- actionの値の見直し可能性あり -->
     <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
-      <p>基本タグ<br>
-      <input type="text" name="post[tag_id]"></p>
       <!-- <p class="title__error" style="color:red">{{ $errors->first('post.title') }}</p> -->
       <p>カスタムタグ<br>
-      <textarea name="post[custom_tag]" cols="1" rows="20"></textarea></p>
+      <textarea name="post[custom_tag]" cols="20" rows="2"></textarea></p>
       <!-- <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p> -->
 
       <div class="image">
