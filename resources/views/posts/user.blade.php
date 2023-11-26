@@ -18,8 +18,8 @@
 	  <div class='my-photo'>
 	    @foreach ($photos as $photo)
 		    <div>
-		      
-		    </div>
+          <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+        </div>
 	    @endforeach
 	  </div>
 	  <a href='/posts/create'>create</a>
