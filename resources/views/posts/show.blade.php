@@ -18,7 +18,7 @@
         </div>
 	  </div>
     <div class='tags'>
-		    <p>{{ $photo->tag }}</p>
+		    <p>{{ $photo->tag->name }}</p>
         <p>{{ $photo->custom_tag }}</p>
 	  </div>
 

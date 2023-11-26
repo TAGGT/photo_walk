@@ -35,18 +35,7 @@ class PhotoController extends Controller
 		return redirect('/posts/create');
 	}
 
-	public function store(PhotoRequest $request, Photo $photo)
-  {
-    $input = $request['post'];
-    //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
-    $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-    $user_id = Auth::user()->id;
-    $input += ['photo_pas' => $image_url];
-    $input += [ 'user_id' => $user_id];
-    $photo->timestamps = false;
-	  $photo->fill($input)->save();
-		return redirect('/posts/create');
-	}
+
 
 	/* 
 	役割：特定の写真を見る機能を持ち、その画面で削除・編集を行えるボタンが有る
