@@ -16,19 +16,20 @@
     <!-- actionの値の見直し可能性あり -->
     <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
-      <!-- <p class="title__error" style="color:red">{{ $errors->first('post.title') }}</p> -->
       <p>カスタムタグ<br>
-      <textarea name="post[custom_tag]" cols="20" rows="2"></textarea></p>
-      <!-- <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p> -->
+      <textarea name="post[custom_tag]" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
+      <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
       <div class="image">
         <input type="file" name="image">
       </div>
 
       <p>緯度<br>
-      <input type="text" name="post[latitude]"></p>
+      <input type="text" name="post[latitude]" value="{{ old('post.latitude') }}"></p>
+      <p class="latitude__error" style="color:red">{{ $errors->first('post.latitude') }}</p>
       <p>経度<br>
-      <input type="text" name="post[longitude]"></p>
+      <input type="text" name="post[longitude]" value="{{ old('post.longitude') }}"></p>
+      <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
  
 
       <div class="tag">

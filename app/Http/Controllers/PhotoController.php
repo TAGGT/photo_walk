@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;//後でバリデーション自分で作る
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Photo;
 use App\Models\Tag;
 use App\Models\User;
+use App\Http\Requests\PhotoRequest;
 use Cloudinary;
 
 class PhotoController extends Controller
@@ -16,7 +17,7 @@ class PhotoController extends Controller
 		return view('posts.create')->with(['tags' => $tag->get()]);
 	}
 
-    public function store(Request $request, Photo $photo)
+    public function store(PhotoRequest $request, Photo $photo)
     {
         $input = $request['post'];
         //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
@@ -29,7 +30,7 @@ class PhotoController extends Controller
 		return redirect('/posts/create');
 	}
 
-	public function delete(Post $post)
+	public function delete(Photo $photo)
 	{
 		$post->delete();
 		return redirect('/');	
