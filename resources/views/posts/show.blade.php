@@ -21,6 +21,11 @@
 		    <p>{{ $photo->tag->name }}</p>
         <p>{{ $photo->custom_tag }}</p>
 	  </div>
+    <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
+      @csrf
+      @method('DELETE')
+      <button type="button" onclick="deletePhoto({{ $photo->id }})">delete</button> 
+    </form>
 
 	  <a href='/posts/home'>return</a>
 	  
@@ -31,7 +36,7 @@
 
   <script>
   
-  function deletePost(id) {
+  function deletePhoto(id) {
   	'use strict'
   	if(confirm('投稿の削除を実行しますか？')){
   		document.getElementById(`form_${id}`).submit();

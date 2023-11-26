@@ -35,8 +35,6 @@ class PhotoController extends Controller
 		return redirect('/posts/create');
 	}
 
-
-
 	/* 
 	役割：特定の写真を見る機能を持ち、その画面で削除・編集を行えるボタンが有る
 	第一引数：viewにおいて、URLで指定されたidを持つphotos_tableのカラムの一つが入っている
@@ -44,5 +42,15 @@ class PhotoController extends Controller
 	public function show(Photo $photo)
 	{
 		return view('posts.show')->with(['photo' => $photo]);
+	}
+
+	/*
+	役割：投稿された写真の削除
+	第一引数：
+	 */
+	public function delete(Photo $photo)
+	{
+    $photo->delete();
+    return redirect('/posts/home');
 	}
 }
