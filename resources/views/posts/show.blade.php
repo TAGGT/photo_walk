@@ -26,6 +26,7 @@
       @method('DELETE')
       <button type="button" onclick="deletePhoto({{ $photo->id }})">delete</button> 
     </form>
+    <a href="/posts/{{ $photo->id }}/edit">edit</a>
 
 	  <a href='/posts/home'>return</a>
 	  

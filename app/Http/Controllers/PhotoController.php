@@ -22,18 +22,7 @@ class PhotoController extends Controller
 		return view('posts.home')->with(['photos' => Auth::user()->photos()->get()]);
 	}
 
-  public function store(PhotoRequest $request, Photo $photo)
-  {
-    $input = $request['post'];
-    //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
-    $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-    $user_id = Auth::user()->id;
-    $input += ['photo_pas' => $image_url];
-    $input += [ 'user_id' => $user_id];
-    $photo->timestamps = false;
-	  $photo->fill($input)->save();
-		return redirect('/posts/create');
-	}
+  
 
 	/* 
 	役割：特定の写真を見る機能を持ち、その画面で削除・編集を行えるボタンが有る
@@ -45,12 +34,50 @@ class PhotoController extends Controller
 	}
 
 	/*
+	役割：投稿編集画面の表示
+	第一引数：編集対象のカラム
+	*/
+	public function edit(Post $post)
+	{
+		return view('posts.edit')->with(['post' => $post]);
+	}
+
+	/*
 	役割：投稿された写真の削除
-	第一引数：
+	第一引数：削除対象のカラム
 	 */
 	public function delete(Photo $photo)
 	{
     $photo->delete();
     return redirect('/posts/home');
+	}
+
+	/*
+	役割：写真の投稿
+	第一引数：投稿情報の格納されたrequestそのもの
+	第二引数：編集対象のカラム
+	 */
+	public function store(PhotoRequest $request, Photo $photo)
+  {
+    $input = $request['post'];
+    //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
+    $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+    $user_id = Auth::user()->id;
+    $input += ['photo_pas' => $image_url];
+    $input += [ 'user_id' => $user_id];
+	  $photo->fill($input)->save();
+		return redirect('/posts/create');
+	}
+
+	/*
+	役割：投稿された写真の編集
+	第一引数：編集後の情報が格納されたリクエスト
+	第二引数：編集対象のカラム
+	*/
+	public function update(PhotoRequest $request, Photo $post)
+	{
+		$input = $request['post'];
+		$post->fill($input)->save();
+		return redirect('/posts/' . $post->id);
 	}
 }

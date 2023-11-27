@@ -23,5 +23,4 @@ class Photo extends Model
         return $this->belongsTo(Tag::class);
     }
     
-    const CREATED_AT = 'created_at';
 }

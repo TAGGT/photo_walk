@@ -34,12 +34,10 @@ Route::controller(PhotoController::class)->middleware(['auth'])->group(function(
 	//Route::get('/', 'home')->name('home');
 	Route::post('/posts', 'store')->name('store'); //投稿保存処理
 	Route::get('/posts/create', 'create')->name('create'); //投稿画面
-	Route::get('/posts/home', 'home')->name('home'); //投稿画面
-	Route::get('/posts/{photo}', 'show')->name('show');
-	//Route::get('/posts/{photo}', 'show')->name('show'); //後で付ける
-	//Route::put('/posts/{photo}', 'update')->name('update');//付ける予定あんまなし
+	Route::get('/posts/home', 'home')->name('home'); //ホーム画面
+	Route::get('/posts/{photo}', 'show')->name('show');//閲覧画面
 	Route::delete('/posts/{photo}', 'delete')->name('delete'); //削除
-	//Route::get('/posts/{photo}/edit', 'edit')->name('edit');//付ける予定あんまなし
+	Route::get('/posts/{photo}/edit', 'edit')->name('edit');//編集機能
 });
 
 Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");
