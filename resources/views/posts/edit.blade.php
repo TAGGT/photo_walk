@@ -14,11 +14,11 @@
   <main>
     <!-- ブログの投稿用フォーム -->
     <!-- actionの値の見直し可能性あり -->
-    <form action="/posts/{{$post->id}}" id="post-photo" method="post-photo">
+    <form action="/posts/{{$photo->id}}" id="post-photo" method="post">
       @csrf
       @method('PUT')
       <p>カスタムタグ<br>
-      <textarea name="post[custom_tag]" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
+      <textarea name="post[custom_tag]" cols="20" rows="2">{{ $photo->custom_tag }}</textarea></p>
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
       <div class='my-photo'>

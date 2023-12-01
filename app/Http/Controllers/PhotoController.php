@@ -37,9 +37,9 @@ class PhotoController extends Controller
 	役割：投稿編集画面の表示
 	第一引数：編集対象のカラム
 	*/
-	public function edit(Post $post)
+	public function edit(Photo $photo, Tag $tag)
 	{
-		return view('posts.edit')->with(['post' => $post]);
+		return view('posts.edit')->with(['photo' => $photo, 'tags' => $tag->get()]);
 	}
 
 	/*
@@ -74,10 +74,10 @@ class PhotoController extends Controller
 	第一引数：編集後の情報が格納されたリクエスト
 	第二引数：編集対象のカラム
 	*/
-	public function update(PhotoRequest $request, Photo $post)
+	public function update(PhotoRequest $request, Photo $photo)
 	{
 		$input = $request['post'];
-		$post->fill($input)->save();
-		return redirect('/posts/' . $post->id);
+		$photo->fill($input)->save();
+		return redirect('/posts/' . $photo->id);
 	}
 }

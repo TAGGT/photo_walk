@@ -35,9 +35,11 @@ Route::controller(PhotoController::class)->middleware(['auth'])->group(function(
 	Route::post('/posts', 'store')->name('store'); //投稿保存処理
 	Route::get('/posts/create', 'create')->name('create'); //投稿画面
 	Route::get('/posts/home', 'home')->name('home'); //ホーム画面
+	Route::put('/posts/{photo}', 'update')->name('update');
 	Route::get('/posts/{photo}', 'show')->name('show');//閲覧画面
 	Route::delete('/posts/{photo}', 'delete')->name('delete'); //削除
 	Route::get('/posts/{photo}/edit', 'edit')->name('edit');//編集機能
+	
 });
 
 Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");
