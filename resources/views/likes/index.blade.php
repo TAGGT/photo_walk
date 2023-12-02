@@ -29,9 +29,9 @@
               <span class="badge">{{ $photo->likes->count() }}</span>
             </a>
           @else
-          <a href="{{ route('nice', $photo) }}" class="btn btn-secondary btn-sm">
+          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm">
             いいねをつける
-            <span class="badge">{{ $photo->nices->count() }}</span>
+            <span class="badge">{{ $photo->likes->count() }}</span>
           </a>
           @endif
 

@@ -51,7 +51,7 @@ Route::controller(LikeController::class)->middleware(['auth'])->group(function()
 	Route::get('/unlike/{photo}','unlike')->name('unlike');
 
 	//いいねを表示するページ
-	Route::get('/like/index','like_index')->name('like_index');
+	Route::get('/likes/index','index')->name('like_index');
 });
 
 Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");

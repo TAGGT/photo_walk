@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\Photo;
 use App\Models\Like;
 use App\Models\Tag;
+use App\Models\User;
+
 
 class LikeController extends Controller
 {
@@ -24,7 +26,7 @@ class LikeController extends Controller
     //いいねを消す
     public function unlike(Photo $photo){
         $user = Auth::user()->id;
-        $like = Nice::where('photo_id', $photo->id)->where('user_id', $user)->first();
+        $like = Like::where('photo_id', $photo->id)->where('user_id', $user)->first();
         $like->delete();
         return back();
     }
@@ -32,9 +34,11 @@ class LikeController extends Controller
     // いいねを表示するページ
     public function index(Photo $photo)
     {
-        $photos = Photo::all();
+        
+        $photos = Photo::get();
         $user = Auth::user();
         $like = Like::where('photo_id', $photo->id)->where('user_id', $user)->first();
+
         return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
     }
 
