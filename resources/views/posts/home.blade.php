@@ -24,7 +24,7 @@
         </div>
         <a href="/like/{{$photo->id}}" class="btn btn-secondary btn-sm">
           いいねをつける
-          <span class="badge">{{ $post->nices->count() }}</span>
+          <span class="badge">{{ $photo->likes->count() }}</span>
         </a>
 	    @endforeach
 	  </div>
