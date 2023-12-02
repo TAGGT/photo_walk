@@ -18,7 +18,7 @@
       @csrf
       @method('PUT')
       <p>カスタムタグ<br>
-      <textarea name="post[custom_tag]" cols="20" rows="2">{{ $photo->custom_tag }}</textarea></p>
+      <textarea name="custom_tags" cols="20" rows="2">{{ $photo->custom_tag }}</textarea></p>
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
       <div class='my-photo'>

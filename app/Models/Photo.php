@@ -12,7 +12,6 @@ class Photo extends Model
     protected $fillable = [
         'user_id',
         'tag_id',
-        'custom_tag',
         'latitude',
         'longitude',
         'photo_pas',
