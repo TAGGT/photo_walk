@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('custom_tag_photos', function (Blueprint $table) {
             $table->foreignId('photo_id')->constrained();
-            $table->foreignId('custom_tag_id')->constrained();
+            $table->foreignId('custom_tag_id')->constrained('custom_tags');
         });
     }
 

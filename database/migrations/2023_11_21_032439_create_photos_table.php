@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('tag_id')->constrained();
-            $table->string('custom_tag', 1024)->nullable();
             $table->float('latitude', 9, 6);
             $table->float('longitude',9, 6);
             $table->string('photo_pas');
