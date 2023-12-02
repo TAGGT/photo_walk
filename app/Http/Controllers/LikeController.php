@@ -10,12 +10,22 @@ use App\Models\Tag;
 
 class LikeController extends Controller
 {
+
+    //いいねを付ける
     public function like(Photo $photo){
         $like = New Like();
         $like->photo_id = $photo->id;
         $like->user_id = Auth::user()->id;
         $like->save();
         
+        return back();
+    }
+
+    //いいねを消す
+    public function unlike(Photo $photo){
+        $user = Auth::user()->id;
+        $like = Nice::where('photo_id', $photo->id)->where('user_id', $user)->first();
+        $like->delete();
         return back();
     }
 
@@ -27,4 +37,6 @@ class LikeController extends Controller
         $like = Like::where('photo_id', $photo->id)->where('user_id', $user)->first();
         return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
     }
+
+    
 }

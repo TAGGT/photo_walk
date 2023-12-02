@@ -47,6 +47,9 @@ Route::controller(LikeController::class)->middleware(['auth'])->group(function()
 	//いいねを付ける
 	Route::get('/like/{photo}','like')->name('like');
 
+	//いいねを外す
+	Route::get('/unlike/{photo}','unlike')->name('unlike');
+
 	//いいねを表示するページ
 	Route::get('/like/index','like_index')->name('like_index');
 });
