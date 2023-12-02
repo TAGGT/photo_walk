@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,14 @@ Route::controller(PhotoController::class)->middleware(['auth'])->group(function(
 	Route::delete('/posts/{photo}', 'delete')->name('delete'); //削除
 	Route::get('/posts/{photo}/edit', 'edit')->name('edit');//編集機能
 	
+});
+
+Route::controller(LikeController::class)->middleware(['auth'])->group(function(){
+	//いいねを付ける
+	Route::get('/like/{photo}','like')->name('like');
+
+	//いいねを表示するページ
+	Route::get('/like/index','like_index')->name('like_index');
 });
 
 Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");
