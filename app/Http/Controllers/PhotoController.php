@@ -59,6 +59,12 @@ class PhotoController extends Controller
 	public function store(PhotoRequest $request, Photo $photo)
   {
     $input = $request['post'];
+    
+    //渡されたカスタムタグ文字列を分解している
+    $custom_tags=$request->input('custom_tags');
+    $explodedTags = explode('#', $custom_tags);
+    $filteredTags = array_filter($explodedTags);
+    
     //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
     $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
     $user_id = Auth::user()->id;
