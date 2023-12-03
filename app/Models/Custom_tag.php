@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Custom_tag extends Model
 {
     use HasFactory;
+
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class, 'custom_tag_photos');
+    }
 }

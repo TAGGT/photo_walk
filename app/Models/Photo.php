@@ -25,5 +25,10 @@ class Photo extends Model
     public function likes(){
         return $this->hasMany(Like::class);
     }
+
+    public function custom_tags()
+    {
+        return $this->belongsToMany(Custom_tags::class, 'custom_tag_photos');
+    }
     
 }

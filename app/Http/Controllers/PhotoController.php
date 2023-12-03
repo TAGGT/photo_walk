@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Photo;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Custom_tag_photo;
+use App\Models\Custom_tag;
 use App\Http\Requests\PhotoRequest;
 use Cloudinary;
 
@@ -56,7 +58,7 @@ class PhotoController extends Controller
 	第一引数：投稿情報の格納されたrequestそのもの
 	第二引数：編集対象のカラム
 	 */
-	public function store(PhotoRequest $request, Photo $photo)
+	public function store(PhotoRequest $request, Photo $photo, Custom_tag_photo $custom_tag_photo)
   {
     $input = $request['post'];
     
@@ -64,13 +66,25 @@ class PhotoController extends Controller
     $custom_tags=$request->input('custom_tags');
     $explodedTags = explode('#', $custom_tags);
     $filteredTags = array_filter($explodedTags);
-    
-    //cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
+    $uniqueTags = array_unique($customTagsArray);
+
+		//cloudinaryへ画像を送信し、画像のURLを$image_urlに代入している
     $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
     $user_id = Auth::user()->id;
     $input += ['photo_pas' => $image_url];
     $input += [ 'user_id' => $user_id];
 	  $photo->fill($input)->save();
+
+		foreach ($uniqueTags as $tagName) {
+			$tag = Custom_tag::firstOrCreate(['name' => $tagName]);
+			// 写真とカスタムタグを中間テーブルに紐付ける
+			
+			$input += ['photo_id' => $photo->id];
+    	$input += ['custom_tag_id' => $tag->id];
+			$custom_tag_photo->fill($input)->save();
+		}
+    
+    
 		return redirect('/posts/create');
 	}
 
