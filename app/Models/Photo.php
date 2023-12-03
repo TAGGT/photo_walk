@@ -28,7 +28,7 @@ class Photo extends Model
 
     public function custom_tags()
     {
-        return $this->belongsToMany(Custom_tags::class, 'custom_tag_photos');
+        return $this->belongsToMany(Custom_tag::class, 'custom_tag_photos');
     }
     
 }
