@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 </head>
 <x-app-layout>
 <x-slot name="header">
@@ -17,6 +18,9 @@
           <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
         </div>
 	  </div>
+
+    <div id="map" style="height:500px"></div>
+
     <div class='tags'>
 		    <p>{{ $photo->tag->name }}</p>
         <p>
@@ -47,7 +51,40 @@
   		document.getElementById(`form_${id}`).submit();
   	}
   }
+
+  function initMap() {
+                map = document.getElementById("map");
+                
+                // 東京タワーの緯度、経度を変数に入れる
+                let axis = {lat: $photo->latitude, lng: $photo->longitude};
+
+                // オプションの設定
+                opt = {
+                    // 地図の縮尺を指定
+                    zoom: 13,
+
+                    // センターを東京タワーに指定
+                    center: axis,
+                };
+
+                // 地図のインスタンスを作成（第一引数にはマップを描画する領域、第二引数にはオプションを指定）
+                mapObj = new google.maps.Map(map, opt);
+
+                marker = new google.maps.Marker({
+                    // ピンを差す位置を東京タワーに設定
+                    position: axis,
+
+                    // ピンを差すマップを指定
+                    map: mapObj,
+
+                    // ホバーしたときに「tokyotower」と表示されるように指定
+
+                    title: 'Object',
+                });
+            }
   </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$api_key}}&callback=initMap" async defer></script>
 </body>
 </x-app-layout>
 </html>

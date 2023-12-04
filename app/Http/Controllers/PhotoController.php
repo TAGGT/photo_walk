@@ -32,7 +32,9 @@ class PhotoController extends Controller
 	*/
 	public function show(Photo $photo)
 	{
-		return view('posts.show')->with(['photo' => $photo]);
+		$map_api = config('app.map_api');
+
+		return view('posts.show')->with(['photo' => $photo, 'map_api' => $map_api]);
 	}
 
 	/*
