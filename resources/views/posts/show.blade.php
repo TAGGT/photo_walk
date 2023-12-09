@@ -56,7 +56,7 @@
                 map = document.getElementById("map");
                 
                 // 東京タワーの緯度、経度を変数に入れる
-                let axis = {lat: $photo->latitude, lng: $photo->longitude};
+                let axis = {lat: {{$photo->latitude}}, lng: {{$photo->longitude}} };
 
                 // オプションの設定
                 opt = {
@@ -84,7 +84,7 @@
             }
   </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$api_key}}&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=initMap" async defer></script>
 </body>
 </x-app-layout>
 </html>
