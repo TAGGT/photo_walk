@@ -16,7 +16,9 @@ class PhotoController extends Controller
 {
     public function create(Tag $tag)
 	{
-		return view('posts.create')->with(['tags' => $tag->get()]);
+		$map_api = config('app.map_api');
+		
+		return view('posts.create')->with(['tags' => $tag->get(), 'map_api' => $map_api]);
 	}
 
 	public function shoot(Tag $tag)
