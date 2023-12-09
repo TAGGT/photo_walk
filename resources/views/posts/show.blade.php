@@ -13,50 +13,102 @@
 <body>
 
   <main>
-	  <div class='my-photo'>
-		    <div>
-          <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-        </div>
-	  </div>
-
-    <div id="map" style="height:500px"></div>
-
-    <div class='tags'>
-		    <p>{{ $photo->tag->name }}</p>
-        <p>
-          @foreach ($photo->custom_tags as $custom_tag)
-          {{$custom_tag->name}}
-          @endforeach
-        </p>
-	  </div>
-    <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
+    <!-- ブログの投稿用フォーム -->
+    <!-- actionの値の見直し可能性あり -->
+    <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
-      @method('DELETE')
-      <button type="button" onclick="deletePhoto({{ $photo->id }})">delete</button> 
-    </form>
-    <a href="/posts/{{ $photo->id }}/edit">edit</a>
+      <p>カスタムタグ<br>
+      <textarea name="custom_tags" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
+      <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
-	  <a href='/posts/home'>return</a>
-	  
+      <div class="image">
+        <input type="file" name="image" capture="environment" accept="video/*">
+      </div>
 
+      <p>緯度<br>
+      <input type="text" name="post[latitude]" id="latitude_form"></p>
+      <p class="latitude__error" style="color:red">{{ $errors->first('post.latitude') }}</p>
+      <p>経度<br>
+      <input type="text" name="post[longitude]" id="longitude_form"></p>
+      <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
+      <div id="map" style="height:500px"></div>
+      <button type='button' onclick="redrawMap()">Redraw Map</button>
 
+ 
+
+      <div class="tag">
+        <h2>Category</h2>
+        <select name="post[tag_id]">
+          @foreach($tags as $tag)
+            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+          @endforeach
+	      </select>
+      </div>
+      
+      <p><input type="submit" class="submit" value="保存"></p>
+</form>
   </main>
 
 
   <script>
   
-  function deletePhoto(id) {
-  	'use strict'
-  	if(confirm('投稿の削除を実行しますか？')){
-  		document.getElementById(`form_${id}`).submit();
-  	}
-  }
+  function getAxis() {
+    navigator.geolocation.getCurrentPosition(initMap);
+}
 
-  function initMap() {
+function initMap(position) {
+
+    //var geo_text = "緯度:" + position.coords.latitude + "\n";
+    //geo_text += "経度:" + position.coords.longitude + "\n";
+
+    var longitudeElement = document.getElementById("longitude_form");
+
+    longitudeElement.value = position.coords.longitude;
+
+    var latitudeElement = document.getElementById("latitude_form");
+
+    latitudeElement.value = position.coords.latitude;
+
+    //initMapの
+    map = document.getElementById("map");
+                
+    // 東京タワーの緯度、経度を変数に入れる
+    let axis = {lat: position.coords.latitude, lng: position.coords.longitude };
+
+    // オプションの設定
+    opt = {
+      // 地図の縮尺を指定
+      zoom: 13,
+
+      // センターを東京タワーに指定
+      center: axis,
+    };
+
+    // 地図のインスタンスを作成（第一引数にはマップを描画する領域、第二引数にはオプションを指定）
+    mapObj = new google.maps.Map(map, opt);
+
+    marker = new google.maps.Marker({
+    // ピンを差す位置を東京タワーに設定
+    position: axis,
+
+    // ピンを差すマップを指定
+    map: mapObj,
+
+    // ホバーしたときに「tokyotower」と表示されるように指定
+
+    title: 'Object',
+  });     
+
+}
+
+  function redrawMap() {
                 map = document.getElementById("map");
+                var longitudeElement = document.getElementById("longitude_form");
+
+                var latitudeElement = document.getElementById("latitude_form");
                 
                 // 東京タワーの緯度、経度を変数に入れる
-                let axis = {lat: {{$photo->latitude}}, lng: {{$photo->longitude}} };
+                let axis = {lat: parseFloat(latitudeElement.value), lng: parseFloat(longitudeElement.value) };
 
                 // オプションの設定
                 opt = {
@@ -83,8 +135,9 @@
                 });
             }
   </script>
-
-<script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=initMap" async defer></script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
 </body>
 </x-app-layout>
+
 </html>

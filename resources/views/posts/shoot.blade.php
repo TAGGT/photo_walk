@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 </head>
 <x-app-layout>
 <x-slot name="header">
@@ -21,7 +22,7 @@
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
       <div class="image">
-        <input type="file" name="image" capture="user" accept="image/*">
+        <input type="file" name="image" capture="environment" accept="video/*">
       </div>
 
       <p>緯度<br>
@@ -31,7 +32,7 @@
       <input type="text" name="post[longitude]" id="longitude_form"></p>
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
       <div id="map" style="height:500px"></div>
-      <button onclick="redrawMap()">Redraw Map</button>
+      <button type='button' onclick="redrawMap()">Redraw Map</button>
 
  
 
@@ -107,7 +108,7 @@ function initMap(position) {
                 var latitudeElement = document.getElementById("latitude_form");
                 
                 // 東京タワーの緯度、経度を変数に入れる
-                let axis = {lat: latitudeElement.value, lng: longitudeElement.value };
+                let axis = {lat: parseFloat(latitudeElement.value), lng: parseFloat(longitudeElement.value) };
 
                 // オプションの設定
                 opt = {
@@ -134,6 +135,8 @@ function initMap(position) {
                 });
             }
   </script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
 </body>
 </x-app-layout>
 
