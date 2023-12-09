@@ -19,6 +19,11 @@ class PhotoController extends Controller
 		return view('posts.create')->with(['tags' => $tag->get()]);
 	}
 
+	public function shoot(Tag $tag)
+	{
+		return view('posts.shoot')->with(['tags' => $tag->get()]);
+	}
+
     public function home()
 	{
 		return view('posts.home')->with(['photos' => Auth::user()->photos()->get()]);

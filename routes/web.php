@@ -35,6 +35,7 @@ Route::controller(PhotoController::class)->middleware(['auth'])->group(function(
 	//Route::get('/', 'home')->name('home');
 	Route::post('/posts', 'store')->name('store'); //投稿保存処理
 	Route::get('/posts/create', 'create')->name('create'); //投稿画面
+	Route::get('/posts/shoot', 'shoot')->name('shoot'); //投稿画面
 	Route::get('/posts/home', 'home')->name('home'); //ホーム画面
 	Route::put('/posts/{photo}', 'update')->name('update');
 	Route::get('/posts/{photo}', 'show')->name('show');//閲覧画面
