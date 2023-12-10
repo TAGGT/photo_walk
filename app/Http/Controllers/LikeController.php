@@ -42,5 +42,14 @@ class LikeController extends Controller
         return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
     }
 
+    // いいねを表示するページ
+    public function index(Photo $photo)
+    {
+        $user = Auth::user();
+        $likes = $user->likes();
+
+        return view('likes.index')->with(['likes' => $likes]);
+    }
+
     
 }
