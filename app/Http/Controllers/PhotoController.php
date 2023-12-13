@@ -52,7 +52,9 @@ class PhotoController extends Controller
 	*/
 	public function edit(Photo $photo, Tag $tag)
 	{
-		return view('posts.edit')->with(['photo' => $photo, 'tags' => $tag->get()]);
+		$map_api = config('app.map_api');
+
+		return view('posts.edit')->with(['photo' => $photo, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
 
 	/*
