@@ -43,12 +43,15 @@ class LikeController extends Controller
     }
 
     // いいねを表示するページ
-    public function index(Photo $photo)
+    public function likes_only()
     {
         $user = Auth::user();
-        $likes = $user->likes();
+        $likes = $user->likes->pluck('photo_id');;
 
-        return view('likes.index')->with(['likes' => $likes]);
+        // データベースから写真を取得する（photosテーブルを仮定）
+        $photos = Photo::whereIn('id', $likes)->get();
+
+        return view('likes.likes')->with(['photos' => $photos]);
     }
 
     

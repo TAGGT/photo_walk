@@ -53,6 +53,8 @@ Route::controller(LikeController::class)->middleware(['auth'])->group(function()
 
 	//いいねを表示するページ
 	Route::get('/likes/index','index')->name('like_index');
+	
+	Route::get('/likes/only','likes_only')->name('likes_only');
 });
 
 Route::get('/tags/{tag}', [TagController::class,'index'])->middleware("auth");

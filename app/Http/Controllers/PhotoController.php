@@ -39,11 +39,11 @@ class PhotoController extends Controller
 	役割：特定の写真を見る機能を持ち、その画面で削除・編集を行えるボタンが有る
 	第一引数：viewにおいて、URLで指定されたidを持つphotos_tableのカラムの一つが入っている
 	*/
-	public function show(Photo $photo)
+	public function show(Photo $photo, Tag $tag)
 	{
 		$map_api = config('app.map_api');
 
-		return view('posts.show')->with(['photo' => $photo, 'map_api' => $map_api]);
+		return view('posts.show')->with(['photo' => $photo, 'map_api' => $map_api, 'tags' => $tag->get()]);
 	}
 
 	/*

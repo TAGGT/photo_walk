@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('like_index')" :active="request()->routeIs('dashboard')">
                         {{ __('Photos') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('likes_only')" :active="request()->routeIs('dashboard')">
+                        {{ __('Likes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
