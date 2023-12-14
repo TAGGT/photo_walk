@@ -20,7 +20,11 @@
 	  </div>
     <div class='tags'>
 		    <p>{{ $photo->tag->name }}</p>
-        <p>{{ $photo->custom_tag }}</p>
+        <p>
+          @foreach ($photo->custom_tags as $custom_tag)
+          {{$custom_tag->name}}
+          @endforeach
+        </p> 
 	  </div>
 	  <div id="map" style="height:500px"></div>
     <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">

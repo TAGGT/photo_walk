@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+  
 </head>
 <x-app-layout>
 <x-slot name="header">
@@ -47,11 +48,13 @@
       
       <p><input type="submit" class="submit" value="保存"></p>
 </form>
+
+<button type='button' onclick="callGeoApi()">call api</button>
   </main>
 
 
   <script src="{{ asset('/js/create.js') }}"></script>
-  
+  <script src="{{ asset('/js/geoapi.js') }}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
 </body>
 </x-app-layout>
