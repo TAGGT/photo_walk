@@ -36,5 +36,22 @@ $(document).ready(function () {
             })
     }
 
+    function setTown() {
+        const prefecture = document.getElementById('geoapi-prefectures').value;
+        fetch('https://geoapi.heartrails.com/api/json?method=getCities&prefecture=' + prefecture) //（1）
+            .then((response) => response.json()) //（2）
+            .then((res) => {
+                var cities = res.response;
+                var select = $('#geoapi-towns'); // <select>要素を取得
+
+                // 配列の各要素をループしてオプションを追加 
+                $.each(cities, function (index, city) {
+                    select.append('<option value="' + city.city + '">' + city.city + '</option>');
+                });
+            })
+    }
+
+    
+
     setPrefecture();
 });
