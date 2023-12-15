@@ -51,6 +51,8 @@
 <select id="geoapi-prefectures" name="geoapi-prefectures">
   <option value="エリアを選択してください">エリアを選択してください</option>
 </select>
+<button type='button' onclick="setTown()">決定</button>
+
 
 <button type='button' onclick="callGeoApi()">call api</button>
   </main>
