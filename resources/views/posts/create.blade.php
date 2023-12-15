@@ -48,11 +48,15 @@
       
       <p><input type="submit" class="submit" value="保存"></p>
 </form>
+<select id="geoapi-prefectures" name="geoapi-prefectures">
+  <option value="エリアを選択してください">エリアを選択してください</option>
+</select>
 
 <button type='button' onclick="callGeoApi()">call api</button>
   </main>
 
 
+  <script src="{{ asset('/js/jquery-3.7.0.min.js') }}"></script>
   <script src="{{ asset('/js/create.js') }}"></script>
   <script src="{{ asset('/js/geoapi.js') }}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
