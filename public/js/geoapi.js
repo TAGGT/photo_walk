@@ -26,7 +26,7 @@ $(document).ready(function () {
         fetch('https://geoapi.heartrails.com/api/json?method=getPrefectures') //（1）
             .then((response) => response.json()) //（2）
             .then((res) => {
-                prefectures = res.response;
+                var prefectures = res.response.prefecture;
                 var select = $('#geoapi-prefectures'); // <select>要素を取得
 
                 // 配列の各要素をループしてオプションを追加
