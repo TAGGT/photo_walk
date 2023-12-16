@@ -48,15 +48,23 @@
       
       <p><input type="submit" class="submit" value="保存"></p>
 </form>
-<select id="geoapi-prefectures" name="geoapi-prefectures">
-</select>
-<button type='button' onclick="setTown()">決定</button>
+<div class="geo-options">
+  <select id="geoapi-prefectures">
+ </select>
+ <button id='prefecture' type='button'>決定</button>
+</div>
 
-<select id="geoapi-towns" name="geoapi-towns">
-</select>
-<button type='button' onclick="setTown()">決定</button>
+<div class="geo-options">
+  <select id="geoapi-cities" name="geoapi-cities">
+  </select>
+  <p>一文字目(ひらがな)<input type="text" name="initial" id="initial-form">あ</p>
+  <button id='city' type='button'>決定</button>
+</div>
 
-<button type='button' onclick="callGeoApi()">call api</button>
+
+
+
+
   </main>
 
 
