@@ -61,22 +61,31 @@ $(document).ready(function () {
     });
     
     $('#city').on('click', function () {
-        const selected_prefecture = document.getElementById("geoapi-prefectures").value;
-
-        fetch('https://geoapi.heartrails.com/api/json?method=getCities&prefecture=' + selected_prefecture) //（1）
+        const selected_city = document.getElementById("geoapi-cities").value;
+        const initial_char = document.getElementById("initial-form").value;
+        fetch('https://geoapi.heartrails.com/api/json?method=getTowns&city=' + selected_city) //（1）
             .then((response) => response.json()) //（2）
             .then((res) => {
-                var cities = res.response.location;
+                var towns = res.response.location;
                 console.log(res);
-                var select = $('#geoapi-cities'); // <select>要素を取得
+                var select = $('#geoapi-towns'); // <select>要素を取得
 
                 // 配列の各要素をループしてオプションを追加 
-                $.each(cities, function (index, city) {
-                    select.append('<option value="' + city.city + '">' + city.city + '</option>');
+                $.each(towns, function (index, town) {
+                    if (initial_char && initial_char.length > 0) { // inputValueが存在し、長さが0より大きい場合の条件を追加
+                        if (town.kana.charAt(0) === initial_char.charAt(0)) {
+                            select.append('<option value="' + town.town + '">' + town.town + '</option>');
+                        }
+                    } else {
+                        alert("文字が入力されていません。");
+                    }
+                    
                 });
                 
                 select.trigger('change');
             })
+
+        
     });
 
 });

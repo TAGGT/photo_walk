@@ -61,6 +61,12 @@
   <button id='city' type='button'>決定</button>
 </div>
 
+<div class="geo-options">
+  <select id="geoapi-towns">
+ </select>
+ <button id='towns' type='button'>決定</button>
+</div>
+
 
 
 
