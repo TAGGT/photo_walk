@@ -25,6 +25,26 @@
       <div class="image">
         <input type="file" name="image">
       </div>
+      
+      <div class="geo-options">
+        <select id="geoapi-prefectures">
+        </select>
+        <button id='prefecture' type='button'>決定</button>
+      </div>
+
+      <div class="geo-options">
+        <select id="geoapi-cities" name="geoapi-cities">
+        </select>
+        <p>一文字目(ひらがな)<br>
+        <input type="text" name="initial" id="initial-form"></p>
+        <button id='city' type='button'>決定</button>
+      </div>
+
+      <div class="geo-options">
+        <select id="geoapi-towns">
+        </select>
+        <button id='town' type='button'>決定</button>
+      </div>
 
       <p>緯度<br>
       <input type="text" name="post[latitude]" id="latitude_form"></p>
@@ -48,24 +68,7 @@
       
       <p><input type="submit" class="submit" value="保存"></p>
 </form>
-<div class="geo-options">
-  <select id="geoapi-prefectures">
- </select>
- <button id='prefecture' type='button'>決定</button>
-</div>
 
-<div class="geo-options">
-  <select id="geoapi-cities" name="geoapi-cities">
-  </select>
-  <p>一文字目(ひらがな)<input type="text" name="initial" id="initial-form">あ</p>
-  <button id='city' type='button'>決定</button>
-</div>
-
-<div class="geo-options">
-  <select id="geoapi-towns">
- </select>
- <button id='towns' type='button'>決定</button>
-</div>
 
 
 
