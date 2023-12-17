@@ -22,10 +22,18 @@
             <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
           </a>
         </div>
-        <a href="/like/{{$photo->id}}" class="btn btn-secondary btn-sm">
-          いいねをつける
-          <span class="badge">{{ $photo->likes->count() }}</span>
-        </a>
+        
+          @if($photo->likes()->where('user_id', Auth::user()->id)->count() > 0)
+            <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm">
+              いいねを消す
+              <span class="badge">{{ $photo->likes->count() }}</span>
+            </a>
+          @else
+          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm">
+            いいねをつける
+            <span class="badge">{{ $photo->likes->count() }}</span>
+          </a>
+          @endif
 	    @endforeach
 	  </div>
 	  <a href='/posts/create'>create</a>
