@@ -98,6 +98,21 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('create')">
+                        {{ __('Create') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('shoot')">
+                        {{ __('Shoot') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('home')">
+                        {{ __('Home') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('like_index')">
+                        {{ __('Photos') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('likes_only')">
+                        {{ __('Likes') }}
+                    </x-responsive-nav-link>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
