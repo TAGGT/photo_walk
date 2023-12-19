@@ -23,7 +23,7 @@
             </a>
           </div>
           
-          @if($photo->likes()->where('user_id', Auth::user()->id)->count() == 1)
+          @if($photo->likes()->where('user_id', Auth::user()->id)->count() > 0)
             <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm">
               いいねを消す
               <span class="badge">{{ $photo->likes->count() }}</span>
