@@ -37,7 +37,7 @@ class LikeController extends Controller
         
         $photos = Photo::get();
         $user = Auth::user();
-        $like = Like::where('photo_id', $photo->id)->where('user_id', $user)->first();
+        $like = Like::where('user_id', $user->id)->first();
 
         return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
     }
