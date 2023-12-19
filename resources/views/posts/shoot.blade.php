@@ -24,7 +24,7 @@
 
       <!-- 画像入力欄 -->
       <div class="image">
-        <input type="file" name="image" capture="environment" accept="video/*">
+        <input type="file" name="image" capture="user" accept="video/*">
       </div>
 
       <!-- 緯度経度入力欄 -->

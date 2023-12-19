@@ -20,7 +20,7 @@
       @csrf
       @method('PUT')
       <p>カスタムタグ<br>
-      <textarea name="custom_tags" cols="20" rows="2">{{ $photo->custom_tag }}</textarea></p>
+      <textarea name="custom_tags" cols="20" rows="2">@foreach ($photo->custom_tags as $custom_tag)#{{$custom_tag->name}}@endforeach</textarea></p>
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
       <div class='my-photo'>

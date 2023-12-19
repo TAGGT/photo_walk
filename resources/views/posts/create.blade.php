@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-<<<<<<< HEAD
-  @vite('resources/css/app.css') 
-=======
   <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
->>>>>>> testTail
 </head>
 <x-app-layout>
 <x-slot name="header">
@@ -25,11 +21,7 @@
     <!-- actionの値の見直し可能性あり -->
     <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
-<<<<<<< HEAD
       <p class="font-bold">カスタムタグ<br>
-=======
-      <p　class="font-bold">カスタムタグ<br>
->>>>>>> testTail
       <textarea name="custom_tags" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
 
