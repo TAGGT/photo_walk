@@ -28,11 +28,14 @@
         </p> 
 	  </div>
 	  <div id="map" style="height:500px"></div>
+    
+    @if($photo->user_id == Auth::user()->id)
     <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
       @csrf
       @method('DELETE')
       <button type="button" onclick="deletePhoto({{ $photo->id }})">delete</button> 
     </form>
+    @endif
     
     
     
