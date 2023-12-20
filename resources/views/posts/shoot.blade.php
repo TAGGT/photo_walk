@@ -18,15 +18,36 @@
     <!-- actionの値の見直し可能性あり -->
     <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
+      <div class="border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
       <p>カスタムタグ<br>
-      <textarea name="custom_tags" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
+    <textarea class="mt-1" name="custom_tags" cols="20" rows="2">{{ old('post.custom_tag') }}</textarea></p>
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
-
+      </div>
       <!-- 画像入力欄 -->
       <div class="image">
-        <input type="file" name="image" capture="user" accept="video/*">
+        <input type="file" name="image" capture="user" accept="image/*">
       </div>
 
+      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <p>県</p>
+      <select id="geoapi-prefectures"></select>
+        <button class='border-solid border-2 border-gray-500 px-2 rounded' id='prefecture' type='button'>決定</button>
+      </div>
+
+      <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+        <p>市区町村</p>
+        <select id="geoapi-cities" name="geoapi-cities"></select>
+        <p>市区町村一文字目(ひらがな)<br>
+        <input type="text" name="initial" id="initial-form" class="mr-1">
+        <button class='border-solid border-2 border-gray-500 px-2 rounded px-1' id='city' type='button'>決定</button></p>
+      </div>
+
+      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+        <p>町域</p>
+        <select id="geoapi-towns">
+        </select>
+        <button class='border-solid border-2 border-gray-500 px-2 rounded' id='town' type='button'>決定</button>
+      </div>
       <!-- 緯度経度入力欄 -->
       <p>緯度<br>
       <input type="text" name="post[latitude]" id="latitude_form"></p>
@@ -36,7 +57,7 @@
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
       
       <div id="map" style="height:500px"></div>
-      <button type='button' onclick="redrawMap()">Redraw Map</button>
+      <button class='border-solid border-2 border-gray-500 px-2 rounded' type='button' onclick="redrawMap()">Redraw Map</button>
 
  
 
@@ -49,13 +70,14 @@
 	      </select>
       </div>
       
-      <p><input type="submit" class="submit" value="保存"></p>
+      <p><input class='border-solid border-2 border-gray-500 px-2 rounded' type="submit" class="submit" value="保存"></p>
 </form>
   </main>
 
 
   <script src="{{ asset('/js/create.js') }}"></script>
-  
+  <script src="{{ asset('/js/jquery-3.7.0.min.js') }}"></script>
+  <script src="{{ asset('/js/geoapi.js') }}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
 </body>
 </x-app-layout>
