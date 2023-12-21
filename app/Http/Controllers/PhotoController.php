@@ -49,6 +49,7 @@ class PhotoController extends Controller
 	/*
 	役割：投稿編集画面の表示
 	第一引数：編集対象のカラム
+	返戻値：編集画面
 	*/
 	public function edit(Photo $photo, Tag $tag)
 	{
@@ -56,6 +57,47 @@ class PhotoController extends Controller
 
 		return view('posts.edit')->with(['photo' => $photo, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
+
+	/*
+	役割：投稿された写真の検索
+	第一引数：編集後の情報が格納されたリクエスト
+	第二引数：編集対象のカラム
+	返戻値：検索結果の画面
+	*/
+	public function search(PhotoRequest $request, Photo $photo , Custom_tag $custom_tag)
+	{
+		//渡されたカスタムタグ文字列を分解している
+    $custom_tags=$request->input('custom_tags');
+    $explodedTags = explode('#', $custom_tags);
+    $filteredTags = array_filter($explodedTags);
+    $uniqueTags = array_unique($filteredTags);
+		
+
+		//リクエストの分解
+		$tag_id=$request->input('tag_id');
+		//$latitude=$request->input('latitude');
+		//$longitude=$request->input('longitude');
+
+		//検索条件の設定
+		$photos = Photo::where('tag_id', $tag_id)
+    ->orWhereHas('customTags', function ($query) use ($custom_tags) {
+        $query->whereIn('id', $custom_tags);
+    })->get();
+
+		return view('posts.research')->with(['photos' => $photos]);
+	}
+	/*
+	//いいねを表示するページ
+    public function index(Photo $photo)
+    {
+        
+        $photos = Photo::get();
+        $user = Auth::user();
+        $like = Like::where('user_id', $user->id)->first();
+
+        return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
+    }
+	*/
 
 	/*
 	役割：投稿された写真の削除
@@ -115,4 +157,5 @@ class PhotoController extends Controller
 		$photo->fill($input)->save();
 		return redirect('/posts/' . $photo->id);
 	}
+
 }

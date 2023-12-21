@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('like_index')" :active="request()->routeIs('dashboard')">
                         {{ __('Photos') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('search')" :active="request()->routeIs('dashboard')">
+                        {{ __('Search') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('likes_only')" :active="request()->routeIs('dashboard')">
                         {{ __('Likes') }}
                     </x-nav-link>
@@ -109,6 +112,9 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('like_index')">
                         {{ __('Photos') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('search')">
+                        {{ __('Search') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('likes_only')">
                         {{ __('Likes') }}
