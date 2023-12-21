@@ -16,12 +16,13 @@
 <body>
 
   <main>
-  <form action="/posts/reserch" id="search-photo" method="get" enctype="multipart/form-data">
+  <form action="/posts/research" id="search-photo" method="get" enctype="multipart/form-data">
       @csrf
       <!-- 基本タグ入力欄 -->
       <div class="tag">
         <h2>Category</h2>
         <select name="tag_id">
+            <option value="0">選択されていません</option>
           @foreach($tags as $tag)
             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
           @endforeach

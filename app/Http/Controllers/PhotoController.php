@@ -57,6 +57,14 @@ class PhotoController extends Controller
 
 		return view('posts.edit')->with(['photo' => $photo, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
+	
+	public function search(Tag $tag)
+	{
+		$map_api = config('app.map_api');
+		return view('posts.search')->with(['tags' => $tag->get(), 'map_api' => $map_api]);
+	}
+	
+	
 
 	/*
 	役割：投稿された写真の検索
@@ -64,14 +72,16 @@ class PhotoController extends Controller
 	第二引数：編集対象のカラム
 	返戻値：検索結果の画面
 	*/
-	public function search(PhotoRequest $request, Photo $photo , Custom_tag $custom_tag)
+	public function research(PhotoRequest $request, Photo $photo, Tag $tag, Custom_tag $custom_tag)
 	{
+		$map_api = config('app.map_api');
 		//渡されたカスタムタグ文字列を分解している
     $custom_tags=$request->input('custom_tags');
     $explodedTags = explode('#', $custom_tags);
     $filteredTags = array_filter($explodedTags);
     $uniqueTags = array_unique($filteredTags);
-		
+
+	//custom_tag_ids = $custom_tag->whereIn()
 
 		//リクエストの分解
 		$tag_id=$request->input('tag_id');
@@ -80,11 +90,11 @@ class PhotoController extends Controller
 
 		//検索条件の設定
 		$photos = Photo::where('tag_id', $tag_id)
-    ->orWhereHas('customTags', function ($query) use ($custom_tags) {
-        $query->whereIn('id', $custom_tags);
+    ->orWhereHas('custom_tags', function ($query) use ($uniqueTags) {
+        $query->whereIn('name', $uniqueTags);
     })->get();
 
-		return view('posts.research')->with(['photos' => $photos]);
+		return view('posts.research')->with(['photos' => $photos, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
 	/*
 	//いいねを表示するページ

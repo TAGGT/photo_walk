@@ -23,6 +23,7 @@
       <div class="tag">
         <h2>Category</h2>
         <select name="post[tag_id]">
+          <option value="0">選択されていません</option>
           @foreach($tags as $tag)
             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
           @endforeach
