@@ -32,7 +32,9 @@ $(document).ready(function () {
             .then((response) => response.json()) //（2）
             .then((res) => {
                 var cities = res.response.location;
+                $('select#geoapi-cities option').remove();
                 var select = $('#geoapi-cities'); // <select>要素を取得
+                
 
                 // 配列の各要素をループしてオプションを追加 
                 $.each(cities, function (index, city) {
