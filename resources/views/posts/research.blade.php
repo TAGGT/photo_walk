@@ -17,13 +17,13 @@
 
   <main>
   <div id=search-form>
-  <form action="/posts/reserch" id="search-photo" method="get" enctype="multipart/form-data">
+  <form action="/posts/research" id="search-photo" method="get" enctype="multipart/form-data">
       @csrf
       <!-- 基本タグ入力欄 -->
       <div class="tag">
         <h2>Category</h2>
-        <select name="post[tag_id]">
-          <option value="0">選択されていません</option>
+        <select name="tag_id">
+            <option value="0">選択なし</option>
           @foreach($tags as $tag)
             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
           @endforeach
@@ -60,11 +60,23 @@
       </div>
       <!-- 緯度経度入力欄 -->
       <p>緯度<br>
-      <input type="text" name="post[latitude]" id="latitude_form"></p>
+      <input type="text" name="latitude" id="latitude_form"></p>
       <p class="latitude__error" style="color:red">{{ $errors->first('post.latitude') }}</p>
       <p>経度<br>
-      <input type="text" name="post[longitude]" id="longitude_form"></p>
+      <input type="text" name="longitude" id="longitude_form"></p>
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
+
+      <!-- 距離入力欄 -->
+      <p>距離(km)</p>
+      <select id="distance" name="distance">
+      <option>選択なし</option>
+      <option value="1">1km</option>
+      <option value="5">5km</option>
+      <option value="10">10km</option>
+      <option value="20">20km</option>
+      <option value="50">50km</option>
+      <option value="100">100km</option>
+      </select>
       
       <!-- マップ表示　一応 -->
       <div id="map" style="height:500px"></div>

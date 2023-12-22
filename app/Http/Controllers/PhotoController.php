@@ -64,58 +64,6 @@ class PhotoController extends Controller
 		return view('posts.search')->with(['tags' => $tag->get(), 'map_api' => $map_api]);
 	}
 	
-	
-
-	/*
-	役割：投稿された写真の検索
-	第一引数：編集後の情報が格納されたリクエスト
-	第二引数：編集対象のカラム
-	返戻値：検索結果の画面
-	*/
-	public function research(PhotoRequest $request, Photo $photo, Tag $tag, Custom_tag $custom_tag)
-	{
-
-
-		$map_api = config('app.map_api');
-		//渡されたカスタムタグ文字列を分解している
-    $custom_tags=$request->input('custom_tags');
-    $explodedTags = explode('#', $custom_tags);
-    $filteredTags = array_filter($explodedTags);
-    $uniqueTags = array_unique($filteredTags);
-
-	//custom_tag_ids = $custom_tag->whereIn()
-
-		//リクエストの分解
-		$tag_id=$request->input('tag_id');
-
-		$latitude=$request->input('latitude');
-		$longitude=$request->input('longitude');
-		$distance=$request->input('distance');
-
-		//距離あたりの緯度経度を計算
-		$lat_lng=calcLatitudeLongitude($latitude, $longitude, $distance);
-
-		//緯度の下限・上限
-		$latitudeLeast=$latitude-$lat_lng['latitude'];
-		$latitudeMost=$latitude+$lat_lng['latitude'];
-		//経度の下限・上限
-		$longitudeLeast=$longitude-$lat_lng['longitude'];
-		$longitudeMost=$longitude+$lat_lng['longitude'];
-		
-
-		//検索条件の設定
-		dd($tag_id);
-		$photos = Photo::where('tag_id', $tag_id);
-		/*
-		$photos = Photo::where('tag_id', $tag_id)
-    ->orWhereHas('custom_tags', function ($query) use ($uniqueTags) {
-        $query->whereIn('name', $uniqueTags);
-    })->get();
-		*/
-
-		return view('posts.research')->with(['photos' => $photos, 'tags' => $tag->get(), 'map_api' => $map_api]);
-	}
-
 	/*
 	役割：入力された距離あたりの緯度経度を計算する
 	第一引数：緯度
@@ -127,13 +75,92 @@ class PhotoController extends Controller
 	{
 		$equ_radius = 6378.137;
 
-		$deg_lat = 360 * $distance / $equ_radius;
-		$deg_lng = 360 * $distance / ($equ_radius * cos($latitude * pi() / 180));
+		$deg_lat = 360 * floatval($distance) / $equ_radius;
+		$deg_lng = 360 * floatval($distance) / ($equ_radius * cos($latitude * pi() / 180));
 		
 		$lat_lng = ['latitude' => $deg_lat, 'longitude' => $longitude];
 
 		return $lat_lng;	
 	}
+	
+	
+
+	/*
+	役割：投稿された写真の検索
+	第一引数：編集後の情報が格納されたリクエスト
+	第二引数：編集対象のカラム
+	返戻値：検索結果の画面
+	*/
+	public function research(PhotoRequest $request, Photo $photos, Tag $tag, Custom_tag $custom_tag)
+	{
+
+
+		$map_api = config('app.map_api');
+		//渡されたカスタムタグ文字列を分解している
+    $custom_tags=$request->input('custom_tags');
+    
+    $explodedTags = explode('#', $custom_tags);
+    $filteredTags = array_filter($explodedTags);
+    $uniqueTags = array_unique($filteredTags);
+
+	
+	//dd();
+	$photosFilteredTags = collect();
+	$inputedCustomTags = $custom_tag->whereIn('name', $uniqueTags)->get();
+	
+	foreach ($inputedCustomTags as $inputedCustomTag) {
+    	$photosFilteredTags = $photosFilteredTags->merge($inputedCustomTag->photos);
+	}
+	$photosFilteredTags = $photosFilteredTags->unique('id');
+	
+	//指定されたカスタムタグを持つ写真のidのコレクション
+	$tagPhotoIds = $photosFilteredTags->pluck('id');
+	
+	//$custom_tag_ids = $custom_tag_ids->pluck('id')->toArray();
+
+		//リクエストの分解
+		$tag_id=$request->input('tag_id');
+
+		$latitude=$request->input('latitude');
+		$longitude=$request->input('longitude');
+		$distance=$request->input('distance');
+
+		//距離あたりの緯度経度を計算
+		$lat_lng=$this->calcLatitudeLongitude($latitude, $longitude, $distance);
+
+		//緯度の下限・上限
+		$latitudeLeast=$latitude-$lat_lng['latitude'];
+		$latitudeMost=$latitude+$lat_lng['latitude'];
+		//経度の下限・上限
+		$longitudeLeast=$longitude-$lat_lng['longitude'];
+		$longitudeMost=$longitude+$lat_lng['longitude'];
+		
+
+		//検索条件の設定
+		$filteredPhotos = $photos->get();
+		
+		if($tag_id != "0"){
+			$filteredPhotos = $filteredPhotos->where('tag_id', $tag_id);
+		}
+		
+		
+		if(count($uniqueTags) != 0){
+			$filteredPhotos = $filteredPhotos->whereIn('id', $tagPhotoIds);
+		}
+		
+		
+		
+		/*
+		$filteredPhotos = Photo::where('tag_id', $tag_id)
+    ->orWhereHas('custom_tags', function ($query) use ($uniqueTags) {
+        $query->whereIn('name', $uniqueTags);
+    })->get();
+		*/
+
+		return view('posts.research')->with(['photos' => $filteredPhotos, 'tags' => $tag->get(), 'map_api' => $map_api]);
+	}
+
+	
 
 	/*
 	役割：投稿された写真の削除
