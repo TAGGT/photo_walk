@@ -117,6 +117,9 @@
     </div>
   </div>
   @endforeach
+  <div class='paginate flex justify-center'>
+            {{ $photos->links() }}
+  </div>
   </div>
 
 

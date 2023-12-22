@@ -30,7 +30,7 @@ class PhotoController extends Controller
 
     public function home()
 	{
-		return view('posts.home')->with(['photos' => Auth::user()->photos()->get()]);
+		return view('posts.home')->with(['photos' => Auth::user()->photos()->paginate(10)]);
 	}
 
   
@@ -75,10 +75,13 @@ class PhotoController extends Controller
 	{
 		$equ_radius = 6378.137;
 
-		$deg_lat = 360 * floatval($distance) / $equ_radius;
-		$deg_lng = 360 * floatval($distance) / ($equ_radius * cos($latitude * pi() / 180));
+
+		$deg_lat = 360 * floatval($distance) / (2 * pi() * $equ_radius);
+		if(cos($latitude * pi() / 180) != 0){
+			$deg_lng = 360 * floatval($distance) / (2 * pi() * $equ_radius * cos($latitude * pi() / 180));
+		}
 		
-		$lat_lng = ['latitude' => $deg_lat, 'longitude' => $longitude];
+		$lat_lng = ['latitude' => $deg_lat, 'longitude' => $deg_lng];
 
 		return $lat_lng;	
 	}
@@ -121,12 +124,16 @@ class PhotoController extends Controller
 		//リクエストの分解
 		$tag_id=$request->input('tag_id');
 
-		$latitude=$request->input('latitude');
-		$longitude=$request->input('longitude');
+
+		$latitude=(float)$request->input('latitude');
+		$longitude=(float)$request->input('longitude');
+		
+
 		$distance=$request->input('distance');
 
 		//距離あたりの緯度経度を計算
 		$lat_lng=$this->calcLatitudeLongitude($latitude, $longitude, $distance);
+		
 
 		//緯度の下限・上限
 		$latitudeLeast=$latitude-$lat_lng['latitude'];
@@ -137,6 +144,7 @@ class PhotoController extends Controller
 		
 
 		//検索条件の設定
+		/*
 		$filteredPhotos = $photos->get();
 		
 		if($tag_id != "0"){
@@ -147,6 +155,31 @@ class PhotoController extends Controller
 		if(count($uniqueTags) != 0){
 			$filteredPhotos = $filteredPhotos->whereIn('id', $tagPhotoIds);
 		}
+		
+		if($request->input('latitude') != null && $request->input('longitude') != null){
+			$filteredPhotos = $filteredPhotos->where('latitude', '>=', $latitudeLeast)->where('latitude', '<=', $latitudeMost)->where('longitude', '>=', $longitudeLeast)->where('longitude', '<=', $longitudeMost);
+		}
+		*/
+		// 検索条件の設定
+		$filteredPhotos = $photos;
+
+		if ($tag_id != "0") {
+    		$filteredPhotos = $filteredPhotos->where('tag_id', $tag_id);
+		}
+
+		if (count($uniqueTags) != 0) {
+    		$filteredPhotos = $filteredPhotos->whereIn('id', $tagPhotoIds);
+		}
+
+		if ($request->input('latitude') != null && $request->input('longitude') != null) {
+    		$filteredPhotos = $filteredPhotos
+    			->where('latitude', '>=', $latitudeLeast)
+        		->where('latitude', '<=', $latitudeMost)
+        		->where('longitude', '>=', $longitudeLeast)
+        		->where('longitude', '<=', $longitudeMost);
+		}
+
+		$filteredPhotos = $filteredPhotos->paginate(10)->appends(request()->query());
 		
 		
 		

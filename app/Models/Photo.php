@@ -31,4 +31,11 @@ class Photo extends Model
         return $this->belongsToMany(Custom_tag::class, 'custom_tag_photos');
     }
     
+    public function getPaginateByLimit(int $limit_count = 10)
+    {
+        
+        // updated_atで降順に並べたあと、limitで件数制限をかける
+        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
 }

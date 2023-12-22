@@ -36,6 +36,9 @@
           </a>
           @endif
 	    @endforeach
+	    <div class='paginate flex justify-center'>
+            {{ $photos->links() }}
+        </div>
 	  </div>
 	  <a href='/posts/create'>create</a>
 
