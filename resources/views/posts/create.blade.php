@@ -59,10 +59,10 @@
       <input type="text" name="post[longitude]" id="longitude_form"></p>
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
       </div>
-      
-      <!-- height:500px -->
-      <div id="map" style="height:400px; width:70%" class="m-2"></div>
+      <button class='border-solid border-2 border-gray-500 px-2 m-1 rounded' type='button' onclick="getAxis()">Get Current Position</button>
       <button class='border-solid border-2 border-gray-500 px-2 rounded m-1' type='button' onclick="redrawMap()">Redraw Map</button>
+      <div id="map" style="height:400px; width:70%" class="m-2"></div>
+      
 
  
 

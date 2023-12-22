@@ -65,6 +65,8 @@
       <p>経度<br>
       <input type="text" name="longitude" id="longitude_form"></p>
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
+      <button class='border-solid border-2 border-gray-500 px-2 m-1 rounded' type='button' onclick="getAxis()">Get Current Position</button>
+      <button class='border-solid border-2 border-gray-500 px-2 m-1 rounded' type='button' onclick="redrawMap()">Redraw Map</button>
 
       <!-- 距離入力欄 -->
       <p>距離(km)</p>
@@ -80,7 +82,7 @@
       
       <!-- マップ表示　一応 -->
       <div id="map" style="height:500px"></div>
-      <button class='border-solid border-2 border-gray-500 px-2 rounded' type='button' onclick="redrawMap()">Redraw Map</button>
+      
 
       <p><input class='border-solid border-2 border-gray-500 px-2 rounded' type="submit" class="submit" value="検索"></p>
   </form>
@@ -125,7 +127,7 @@
   <script src="{{ asset('/js/create.js') }}"></script>
   <script src="{{ asset('/js/jquery-3.7.0.min.js') }}"></script>
   <script src="{{ asset('/js/geoapi.js') }}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}&callback=getAxis" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{$map_api}}" async defer></script>
 
 </body>
 </x-app-layout>
