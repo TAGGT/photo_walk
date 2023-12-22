@@ -74,6 +74,8 @@ class PhotoController extends Controller
 	*/
 	public function research(PhotoRequest $request, Photo $photo, Tag $tag, Custom_tag $custom_tag)
 	{
+
+
 		$map_api = config('app.map_api');
 		//渡されたカスタムタグ文字列を分解している
     $custom_tags=$request->input('custom_tags');
@@ -85,29 +87,53 @@ class PhotoController extends Controller
 
 		//リクエストの分解
 		$tag_id=$request->input('tag_id');
-		//$latitude=$request->input('latitude');
-		//$longitude=$request->input('longitude');
+
+		$latitude=$request->input('latitude');
+		$longitude=$request->input('longitude');
+		$distance=$request->input('distance');
+
+		//距離あたりの緯度経度を計算
+		$lat_lng=calcLatitudeLongitude($latitude, $longitude, $distance);
+
+		//緯度の下限・上限
+		$latitudeLeast=$latitude-$lat_lng['latitude'];
+		$latitudeMost=$latitude+$lat_lng['latitude'];
+		//経度の下限・上限
+		$longitudeLeast=$longitude-$lat_lng['longitude'];
+		$longitudeMost=$longitude+$lat_lng['longitude'];
+		
 
 		//検索条件の設定
+		dd($tag_id);
+		$photos = Photo::where('tag_id', $tag_id);
+		/*
 		$photos = Photo::where('tag_id', $tag_id)
     ->orWhereHas('custom_tags', function ($query) use ($uniqueTags) {
         $query->whereIn('name', $uniqueTags);
     })->get();
+		*/
 
 		return view('posts.research')->with(['photos' => $photos, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
-	/*
-	//いいねを表示するページ
-    public function index(Photo $photo)
-    {
-        
-        $photos = Photo::get();
-        $user = Auth::user();
-        $like = Like::where('user_id', $user->id)->first();
 
-        return view('likes.index')->with(['photos' => $photos, 'user' => $user, 'like' => $like]);
-    }
+	/*
+	役割：入力された距離あたりの緯度経度を計算する
+	第一引数：緯度
+	第二引数：経度
+	第三引数：距離（キロ換算）
+	返戻値：緯度経度の連想配列
 	*/
+	public function calcLatitudeLongitude($latitude, $longitude, $distance)
+	{
+		$equ_radius = 6378.137;
+
+		$deg_lat = 360 * $distance / $equ_radius;
+		$deg_lng = 360 * $distance / ($equ_radius * cos($latitude * pi() / 180));
+		
+		$lat_lng = ['latitude' => $deg_lat, 'longitude' => $longitude];
+
+		return $lat_lng;	
+	}
 
 	/*
 	役割：投稿された写真の削除
