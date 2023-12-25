@@ -6,6 +6,7 @@
   <title>Document</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
   @vite('resources/css/app.css')
+  @vite('resources/css/test.css')
 </head>
 <x-app-layout>
 <x-slot name="header">
@@ -14,34 +15,42 @@
 <body>
 
   <main>
-	  <div class='my-photo'>
-		    <div>
-          <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-        </div>
-	  </div>
-    <div class='tags'>
-		    <p>{{ $photo->tag->name }}</p>
-        <p>
-          @foreach ($photo->custom_tags as $custom_tag)
-          {{$custom_tag->name}}
-          @endforeach
+    <div class="m-4">
+      <h1 class="underline text-2xl font-bold">写真</h1>
+    </div>
+	  <div class="flex justify-center w-3/4 p-2 m-2 border-solid border-2 border-gray-500 rounded">
+              <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+    </div>
+    
+    <div class='tags border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2'>
+		    <p>基本タグ:<span class="font-bold">{{ $photo->tag->name }}</span></p>
+        <p>カスタムタグ:
+          <span class="font-bold">
+            @foreach ($photo->custom_tags as $custom_tag)
+              {{$custom_tag->name}} 
+            @endforeach
+          </span>
         </p> 
 	  </div>
-	  <div id="map" style="height:500px"></div>
+	  
+	  
+	  <div id="map" style="height:500px; width:70%" class="border-gray-500 border-solid border-2 rounded p-4 m-2"></div>
     
-    @if($photo->user_id == Auth::user()->id)
-    <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
-      @csrf
-      @method('DELETE')
-      <button type="button" onclick="deletePhoto({{ $photo->id }})">delete</button> 
-    </form>
-    @endif
+    <div class="edit-buttons flex">
+      @if($photo->user_id == Auth::user()->id)
+      <form action="/posts/{{ $photo->id }}" id="form_{{ $photo->id }}" method="post">
+          @csrf
+          @method('DELETE')
+          <button type="button" class="decide-button m-2" onclick="deletePhoto({{ $photo->id }})">delete</button> 
+        </form>
+        <a  class="decide-button m-2" href="/posts/{{ $photo->id }}/edit">edit</a>
+      @endif
+   
+      
+    </div>
     
-    
-    
-    <a href="/posts/{{ $photo->id }}/edit">edit</a>
 
-	  <a href='/posts/home'>return</a>
+	  <a  class="decide-button m-2" href='/posts/home'>return</a>
 	  
   </main>
 

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
   @vite('resources/css/app.css')
+  @vite('resources/css/test.css')
   <title>Document</title>
 </head>
 
@@ -16,12 +17,16 @@
 <body>
 
   <main>
+    <div class="m-4">
+      <h1 class="underline text-2xl font-bold">検索された写真</h1>
+    </div>
   <div id=search-form>
   <form action="/posts/research" id="search-photo" method="get" enctype="multipart/form-data">
       @csrf
       <!-- 基本タグ入力欄 -->
+      <div class="border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
       <div class="tag">
-        <h2>Category</h2>
+        <h2>基本タグ</h2>
         <select name="tag_id">
             <option value="0">選択なし</option>
           @foreach($tags as $tag)
@@ -36,12 +41,13 @@
         <textarea class="mt-1" name="custom_tags" cols="20" rows="2"></textarea></p>
         <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
       </div>
+      </div>
 
       <!-- 地名、緯度経度入力欄 -->
-      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
       <p>県</p>
       <select id="geoapi-prefectures"></select>
-        <button class='border-solid border-2 border-gray-500 px-2 rounded' id='prefecture' type='button'>決定</button>
+        <button class='decide-button' id='prefecture' type='button'>決定</button>
       </div>
 
       <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
@@ -56,8 +62,10 @@
         <p>町域</p>
         <select id="geoapi-towns">
         </select>
-        <button class='border-solid border-2 border-gray-500 px-2 rounded' id='town' type='button'>決定</button>
+        <button class='decide-button' id='town' type='button'>決定</button>
       </div>
+      
+      <div class="border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
       <!-- 緯度経度入力欄 -->
       <p>緯度<br>
       <input type="text" name="latitude" id="latitude_form"></p>
@@ -79,51 +87,51 @@
       <option value="50">50km</option>
       <option value="100">100km</option>
       </select>
+      </div>
       
       <!-- マップ表示　一応 -->
-      <div id="map" style="height:500px"></div>
+      <div id="map" style="height:500px; width:70%" class="border-gray-400 border-solid border-2 rounded p-4 m-2"></div>
       
 
-      <p><input class='border-solid border-2 border-gray-500 px-2 rounded' type="submit" class="submit" value="検索"></p>
+      <p><input class='border-solid border-2 border-gray-500 px-2 mx-2 rounded' type="submit" class="submit" value="検索"></p>
   </form>
   </div>
 
-  <div id=seached-posts>
-  @foreach($photos as $photo)
-  <div class="container-fulid mt-20" style="margin-left:-10px;">
+  <div class='my-photo m-1'>
+	@foreach($photos as $photo)
+  <div class="container-fulid mt-20">
     <div >
       <div class="col-md-12">
         <div class="card mb-4">
-          <div>
+          <div class="flex justify-center w-3/4 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded">
             <a href='/posts/{{ $photo->id }}'>
               <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
             </a>
           </div>
           
           @if($photo->likes()->where('user_id', Auth::user()->id)->count() > 0)
-            <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm">
+            <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm decide-button m-1" >
               いいねを消す
               <span class="badge">{{ $photo->likes->count() }}</span>
             </a>
           @else
-          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm">
+          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm decide-button m-1">
             いいねをつける
             <span class="badge">{{ $photo->likes->count() }}</span>
           </a>
           @endif
-
+          
         </div>
       </div>
     </div>
   </div>
   @endforeach
-  <div class='paginate flex justify-center'>
+	    
+	 </div>
+  
+    <div class='paginate flex justify-center'>
             {{ $photos->links() }}
-  </div>
-  </div>
-
-
-
+    </div>
 
   </main>
 

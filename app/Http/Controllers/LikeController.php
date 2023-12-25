@@ -35,7 +35,7 @@ class LikeController extends Controller
     public function index(Photo $photo)
     {
         
-        $photos = Photo::get();
+        $photos = $photo->getPaginateByLimit();
         $user = Auth::user();
         $like = Like::where('user_id', $user->id)->first();
 
@@ -49,7 +49,7 @@ class LikeController extends Controller
         $likes = $user->likes->pluck('photo_id');;
 
         // データベースから写真を取得する（photosテーブルを仮定）
-        $photos = Photo::whereIn('id', $likes)->get();
+        $photos = Photo::whereIn('id', $likes)->orderBy('created_at', 'DESC')->get();
 
         return view('likes.likes')->with(['photos' => $photos]);
     }

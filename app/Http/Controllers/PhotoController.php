@@ -30,7 +30,7 @@ class PhotoController extends Controller
 
     public function home()
 	{
-		return view('posts.home')->with(['photos' => Auth::user()->photos()->paginate(10)]);
+		return view('posts.home')->with(['photos' => Auth::user()->photos()->orderBy('created_at', 'DESC')->paginate(10)]);
 	}
 
   
@@ -97,17 +97,16 @@ class PhotoController extends Controller
 	public function research(PhotoRequest $request, Photo $photos, Tag $tag, Custom_tag $custom_tag)
 	{
 
-
+		//googlemapのapiキーの取得	
 		$map_api = config('app.map_api');
+		
 		//渡されたカスタムタグ文字列を分解している
-    $custom_tags=$request->input('custom_tags');
+    	$custom_tags=$request->input('custom_tags');
     
-    $explodedTags = explode('#', $custom_tags);
-    $filteredTags = array_filter($explodedTags);
-    $uniqueTags = array_unique($filteredTags);
+    	$explodedTags = explode('#', $custom_tags);
+    	$filteredTags = array_filter($explodedTags);
+    	$uniqueTags = array_unique($filteredTags);
 
-	
-	//dd();
 	$photosFilteredTags = collect();
 	$inputedCustomTags = $custom_tag->whereIn('name', $uniqueTags)->get();
 	
@@ -119,7 +118,6 @@ class PhotoController extends Controller
 	//指定されたカスタムタグを持つ写真のidのコレクション
 	$tagPhotoIds = $photosFilteredTags->pluck('id');
 	
-	//$custom_tag_ids = $custom_tag_ids->pluck('id')->toArray();
 
 		//リクエストの分解
 		$tag_id=$request->input('tag_id');
@@ -129,11 +127,10 @@ class PhotoController extends Controller
 		$longitude=(float)$request->input('longitude');
 		
 
-		$distance=$request->input('distance');
-
 		//距離あたりの緯度経度を計算
-		$lat_lng=$this->calcLatitudeLongitude($latitude, $longitude, $distance);
+		$distance=$request->input('distance');
 		
+		$lat_lng=$this->calcLatitudeLongitude($latitude, $longitude, $distance);
 
 		//緯度の下限・上限
 		$latitudeLeast=$latitude-$lat_lng['latitude'];
@@ -143,23 +140,7 @@ class PhotoController extends Controller
 		$longitudeMost=$longitude+$lat_lng['longitude'];
 		
 
-		//検索条件の設定
-		/*
-		$filteredPhotos = $photos->get();
-		
-		if($tag_id != "0"){
-			$filteredPhotos = $filteredPhotos->where('tag_id', $tag_id);
-		}
-		
-		
-		if(count($uniqueTags) != 0){
-			$filteredPhotos = $filteredPhotos->whereIn('id', $tagPhotoIds);
-		}
-		
-		if($request->input('latitude') != null && $request->input('longitude') != null){
-			$filteredPhotos = $filteredPhotos->where('latitude', '>=', $latitudeLeast)->where('latitude', '<=', $latitudeMost)->where('longitude', '>=', $longitudeLeast)->where('longitude', '<=', $longitudeMost);
-		}
-		*/
+
 		// 検索条件の設定
 		$filteredPhotos = $photos;
 
@@ -179,16 +160,8 @@ class PhotoController extends Controller
         		->where('longitude', '<=', $longitudeMost);
 		}
 
-		$filteredPhotos = $filteredPhotos->paginate(10)->appends(request()->query());
+		$filteredPhotos = $filteredPhotos->orderBy('created_at', 'DESC')->paginate(10)->appends(request()->query());
 		
-		
-		
-		/*
-		$filteredPhotos = Photo::where('tag_id', $tag_id)
-    ->orWhereHas('custom_tags', function ($query) use ($uniqueTags) {
-        $query->whereIn('name', $uniqueTags);
-    })->get();
-		*/
 
 		return view('posts.research')->with(['photos' => $filteredPhotos, 'tags' => $tag->get(), 'map_api' => $map_api]);
 	}
@@ -250,6 +223,27 @@ class PhotoController extends Controller
 	public function update(PhotoRequest $request, Photo $photo)
 	{
 		$input = $request['post'];
+		
+	
+    
+    //渡されたカスタムタグ文字列を分解している
+    $custom_tags=$request->input('custom_tags');
+    $explodedTags = explode('#', $custom_tags);
+    $filteredTags = array_filter($explodedTags);
+    $uniqueTags = array_unique($filteredTags);
+    $photo->custom_tags()->detach();
+
+		foreach ($uniqueTags as $tagName) {
+			$tag = Custom_tag::firstOrCreate(['name' => $tagName]);
+			// 写真とカスタムタグを中間テーブルに紐付ける
+			
+			
+			DB::table('custom_tag_photos')->insert([
+            'photo_id' => $photo->id,
+            'custom_tag_id' => $tag->id,
+        	]);
+		}
+		
 		$photo->fill($input)->save();
 		return redirect('/posts/' . $photo->id);
 	}
