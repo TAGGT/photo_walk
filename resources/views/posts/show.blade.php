@@ -19,13 +19,11 @@
       <h1 class="underline text-2xl font-bold">写真</h1>
     </div>
 	  
-    <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
-          <div class="flex items-center h-96 w-2/3 p-2">
-            <span>
-              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-            </span>
+    <div class="p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5"">
+          <div style="width:100%; height:450px;">
+              <img style="object-fit:contain; width:100%; height:100%;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
           </div>
-    </div>
+        </div>
     
     <div class='tags border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2'>
 		    <p>基本タグ:<span class="font-bold">{{ $photo->tag->name }}</span></p>

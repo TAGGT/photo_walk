@@ -42,15 +42,13 @@
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
       </div>
       
-      <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
-          <div class="flex items-center h-96 w-2/3 p-2">
-            <span>
-              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-            </span>
+      <div class="p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5"">
+          <div style="width:100%; height:450px;">
+            <a href='/posts/{{ $photo->id }}'>
+              <img style="object-fit:contain; width:100%; height:100%;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+            </a>
           </div>
-      </div>
-    
-	  </div>
+        </div>
 
       
       

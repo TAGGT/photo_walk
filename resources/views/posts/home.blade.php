@@ -19,15 +19,15 @@
     </div>
 	<div class='my-photo m-1'>
 	@foreach($photos as $photo)
-  <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
-    <div >
+  <div class="container-fulid mt-20 p-2 m-1">
       <div class="col-md-12">
-        <div class="card mb-4">
-          <div class="flex items-center h-96 w-2/3 p-2">
+        <div class="p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5"">
+          <div style="width:100%; height:450px;">
             <a href='/posts/{{ $photo->id }}'>
-              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+              <img style="object-fit:contain; width:100%; height:100%;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
             </a>
           </div>
+        </div>
           
           @if($photo->likes()->where('user_id', Auth::user()->id)->count() > 0)
             <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm border-solid border-2 border-gray-500 px-2 rounded m-1" >
@@ -40,10 +40,8 @@
             <span class="badge">{{ $photo->likes->count() }}</span>
           </a>
           @endif
-          
-        </div>
+
       </div>
-    </div>
   </div>
   @endforeach
 	    <div class='paginate flex justify-center'>
