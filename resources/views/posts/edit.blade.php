@@ -44,9 +44,8 @@
       
       <div class="p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5"">
           <div style="width:100%; height:450px;">
-            <a href='/posts/{{ $photo->id }}'>
               <img style="object-fit:contain; width:100%; height:100%;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-            </a>
+
           </div>
         </div>
 
