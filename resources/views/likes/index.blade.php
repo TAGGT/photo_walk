@@ -17,13 +17,13 @@
   </div>
   <div class="m-1">
 	@foreach($photos as $photo)
-  <div class="container-fulid mt-20">
+  <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
     <div >
       <div class="col-md-12">
         <div class="card mb-4">
-          <div class="flex justify-center w-3/4 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded">
+          <div class="flex items-center h-96 w-2/3 p-2">
             <a href='/posts/{{ $photo->id }}'>
-              <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
             </a>
           </div>
           

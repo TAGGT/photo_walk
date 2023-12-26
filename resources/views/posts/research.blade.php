@@ -99,31 +99,24 @@
 
   <div class='my-photo m-1'>
 	@foreach($photos as $photo)
-  <div class="container-fulid mt-20">
-    <div >
-      <div class="col-md-12">
-        <div class="card mb-4">
-          <div class="flex justify-center w-3/4 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded">
+  <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
+          <div class="flex items-center h-96 w-2/3 p-2">
             <a href='/posts/{{ $photo->id }}'>
-              <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
             </a>
           </div>
           
           @if($photo->likes()->where('user_id', Auth::user()->id)->count() > 0)
-            <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm decide-button m-1" >
+            <a href="{{ route('unlike', $photo) }}" class="btn btn-success btn-sm border-solid border-2 border-gray-500 px-2 rounded m-1" >
               いいねを消す
               <span class="badge">{{ $photo->likes->count() }}</span>
             </a>
           @else
-          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm decide-button m-1">
+          <a href="{{ route('like', $photo) }}" class="btn btn-secondary btn-sm border-solid border-2 border-gray-500 px-2 rounded m-1">
             いいねをつける
             <span class="badge">{{ $photo->likes->count() }}</span>
           </a>
           @endif
-          
-        </div>
-      </div>
-    </div>
   </div>
   @endforeach
 	    

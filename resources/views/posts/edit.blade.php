@@ -27,8 +27,14 @@
         <h2>Category</h2>
         <select name="post[tag_id]">
           @foreach($tags as $tag)
-            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+            
+            @if($photo->tag->id == $tag->id)
+              <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+            @else
+              <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+            @endif
           @endforeach
+          
 	      </select>
       
       <p>カスタムタグ(#区切り)<br>
@@ -36,11 +42,15 @@
       <p class="custom_tag__error" style="color:red">{{ $errors->first('post.custom_tag') }}</p>
       </div>
       
-      <div class="my-photo flex justify-center w-3/4 p-2 m-2 border-solid border-2 border-gray-500 px-2 rounded">
-		    <div>
-          <img src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
-        </div>
-	    </div>
+      <div class="container-fulid mt-20 p-2 m-1 border-solid border-2 border-gray-500 px-2 rounded w-4/5">
+          <div class="flex items-center h-96 w-2/3 p-2">
+            <span>
+              <img style="max-height:364px; max-width:820px;" src="{{ $photo->photo_pas }}" alt="画像が読み込めません。"/>
+            </span>
+          </div>
+      </div>
+    
+	  </div>
 
       
       
