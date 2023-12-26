@@ -24,7 +24,7 @@
     <form action="/posts" id="post-photo" method="post" enctype="multipart/form-data">
       @csrf
       
-      <div class="tag border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="tag border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
         <h2>Category</h2>
         <select name="post[tag_id]">
           @foreach($tags as $tag)
@@ -41,13 +41,13 @@
         <input type="file" name="image">
       </div>
       
-      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options  border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
       <p>県</p>
       <select id="geoapi-prefectures"></select>
         <button class='decide-button' id='prefecture' type='button'>決定</button>
       </div>
 
-      <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>市区町村</p>
         <select id="geoapi-cities" name="geoapi-cities"></select>
         <p>市区町村一文字目(ひらがな)<br>
@@ -55,7 +55,7 @@
         <button class='decide-button' id='city' type='button'>決定</button></p>
       </div>
 
-      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options  border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>町域</p>
         <select id="geoapi-towns">
         </select>
@@ -63,7 +63,7 @@
       </div>
 
       <!-- 緯度経度入力欄-->
-      <div class=" border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class=" border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
       <p>緯度<br>
       <input type="text" name="post[latitude]" id="latitude_form"></p>
       <p class="latitude__error" style="color:red">{{ $errors->first('post.latitude') }}</p>

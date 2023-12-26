@@ -23,7 +23,7 @@
     <form action="/posts/{{$photo->id}}" id="post-photo" method="post">
       @csrf
       @method('PUT')
-      <div class="tag border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="tag border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2">
         <h2>Category</h2>
         <select name="post[tag_id]">
           @foreach($tags as $tag)
@@ -52,13 +52,13 @@
 
       
       
-      <div class="geo-options  border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options  border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2">
       <p>県</p>
       <select id="geoapi-prefectures"></select>
         <button class='decide-button' id='prefecture' type='button'>決定</button>
       </div>
 
-      <div class="geo-options border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>市区町村</p>
         <select id="geoapi-cities" name="geoapi-cities"></select>
         <p>市区町村一文字目(ひらがな)<br>
@@ -66,7 +66,7 @@
         <button class='decide-button' id='city' type='button'>決定</button></p>
       </div>
 
-      <div class="geo-options  border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options  border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>町域</p>
         <select id="geoapi-towns">
         </select>
@@ -74,7 +74,7 @@
       </div>
 
       <!-- 緯度経度入力欄-->
-      <div class=" border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class=" border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2">
       <p>緯度<br>
       <input type="text" name="post[latitude]" id="latitude_form" value="{{ $photo->latitude }}"></p>
       <p class="latitude__error" style="color:red">{{ $errors->first('post.latitude') }}</p>
@@ -82,6 +82,7 @@
       <input type="text" name="post[longitude]" id="longitude_form" value="{{ $photo->longitude }}"></p>
       <p class="longitude__error" style="color:red">{{ $errors->first('post.longitude') }}</p>
       </div>
+      
       <button class='border-solid border-2 border-gray-500 px-2 m-2 rounded' type='button' onclick="getAxis()">Get Current Position</button>
       <button class='border-solid border-2 border-gray-500 px-2 rounded m-1' type='button' onclick="redrawMap()">Redraw Map</button>
       
