@@ -25,7 +25,7 @@
           </div>
         </div>
     
-    <div class='tags border-gray-500 w-1/3 border-solid border-2 rounded p-3 m-2'>
+    <div class='tags border-gray-500 w-2/3 border-solid border-2 rounded p-3 m-2'>
 		    <p>基本タグ:<span class="font-bold">{{ $photo->tag->name }}</span></p>
         <p>カスタムタグ:
           <span class="font-bold">
