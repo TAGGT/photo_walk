@@ -24,7 +24,7 @@
   <form action="/posts/research" id="search-photo" method="get" enctype="multipart/form-data">
       @csrf
       <!-- 基本タグ入力欄 -->
-      <div class="border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
       <div class="tag">
         <h2>基本タグ</h2>
         <select name="tag_id">
@@ -44,13 +44,13 @@
       </div>
 
       <!-- 地名、緯度経度入力欄 -->
-      <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
       <p>県</p>
       <select id="geoapi-prefectures"></select>
         <button class='decide-button' id='prefecture' type='button'>決定</button>
       </div>
 
-      <div class="geo-options border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>市区町村</p>
         <select id="geoapi-cities" name="geoapi-cities"></select>
         <p>市区町村一文字目(ひらがな)<br>
@@ -58,14 +58,14 @@
         <button class='decide-button' id='city' type='button'>決定</button></p>
       </div>
 
-      <div class="geo-options  border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="geo-options  border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
         <p>町域</p>
         <select id="geoapi-towns">
         </select>
         <button class='decide-button' id='town' type='button'>決定</button>
       </div>
       
-      <div class="border-gray-400 w-1/3 border-solid border-2 rounded p-3 m-2">
+      <div class="border-gray-400 w-2/3 border-solid border-2 rounded p-3 m-2">
       <!-- 緯度経度入力欄 -->
       <p>緯度<br>
       <input type="text" name="latitude" id="latitude_form"></p>
